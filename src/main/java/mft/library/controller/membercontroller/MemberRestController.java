@@ -11,13 +11,9 @@ import java.security.Principal;
 
 /**
  * ثبت‌نام و ورود
- *
  *  POST /api/members/register  -> ثبت‌نام (بدون نیاز به ورود)
  *  POST /api/members/login     -> ورود (با هدر Basic Auth)؛ اطلاعات کاربر را برمی‌گرداند
  *  GET  /api/members/me        -> اطلاعات کاربر واردشده
- *
- * نکته: «ورود» در HTTP Basic یعنی ایمیل و رمز را در هدر Authorization می‌فرستید.
- * اگر درست باشد، Spring Security اجازه‌ی رسیدن به این متد را می‌دهد و اگر غلط باشد 401 برمی‌گردد.
  */
 @RestController
 @RequestMapping("/api/members")

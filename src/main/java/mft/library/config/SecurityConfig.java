@@ -15,15 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-/**
- * تنظیمات امنیتی پروژه.
- *
- * علت خطای MemberService: Spring هیچ bean ای از نوع PasswordEncoder نداشت تا به constructor
- * تزریق کند. اینجا آن را می‌سازیم.
- *
- * روش ورود: HTTP Basic (ایمیل + رمز در هدر Authorization هر درخواست).
- * ساده‌ترین روش برای شروع است و نیازی به JWT نیست.
- */
 @Configuration
 public class SecurityConfig {
 
@@ -33,7 +24,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // به Spring Security می‌گوید کاربر را از جدول member پیدا کند
     @Bean
     public UserDetailsService userDetailsService(MemberRepository memberRepository) {
         return username -> {
@@ -41,7 +31,7 @@ public class SecurityConfig {
                     .orElseThrow(() -> new UsernameNotFoundException("کاربر پیدا نشد"));
             return User.withUsername(member.getEmail())
                     .password(member.getPassword())
-                    .roles(member.getRole().name())   // USER یا ADMIN  ->  ROLE_USER / ROLE_ADMIN
+                    .roles(member.getRole().name())
                     .build();
         };
     }
@@ -49,20 +39,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // API ما stateless است و از cookie استفاده نمی‌کند، پس CSRF لازم نیست
+
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        // ثبت‌نام برای همه آزاد است
                         .requestMatchers(HttpMethod.POST, "/api/members/register").permitAll()
-                        // دیدن/جستجوی کتاب: هر کاربر واردشده (USER یا ADMIN)
                         .requestMatchers(HttpMethod.GET, "/api/books/**").authenticated()
-                        // ثبت/ویرایش/حذف کتاب: فقط ADMIN
                         .requestMatchers("/api/books/**").hasRole("ADMIN")
-                        // امانت، رزرو و جریمه: کاربر عادی
                         .requestMatchers("/api/loans/**", "/api/reservations/**", "/api/fines/**").hasRole("USER")
-                        // بقیه (مثل /api/members/me) فقط نیاز به ورود دارند
                         .anyRequest().authenticated()
                 );
         return http.build();

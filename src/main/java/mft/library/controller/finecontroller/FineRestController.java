@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * دیرکرد و جریمه (کاربر عادی)
- *
  *  GET  /api/fines/my       -> لیست جریمه‌های ثبت‌شده‌ی من
  *  GET  /api/fines/my/debt  -> خلاصه‌ی بدهی من
  *  POST /api/fines/my/pay   -> تسویه‌ی شبیه‌سازی‌شده‌ی جریمه‌ها (دکمه‌ی «پرداخت»)

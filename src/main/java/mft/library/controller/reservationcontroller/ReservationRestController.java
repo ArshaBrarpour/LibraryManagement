@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * صف رزرو کتاب‌های ناموجود (کاربر عادی)
- *
  *  POST /api/reservations      -> رزرو کتاب (body: {"bookId": 1})
  *  GET  /api/reservations/my   -> رزروهای من
  */

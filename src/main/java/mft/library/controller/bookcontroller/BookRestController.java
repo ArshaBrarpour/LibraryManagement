@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * مدیریت و جستجوی کتاب‌ها
- *
  *  GET    /api/books?search=&category=&onlyAvailable=&page=&size=  -> لیست صفحه‌بندی‌شده (همه‌ی کاربران)
  *  GET    /api/books/{id}                                          -> یک کتاب (همه‌ی کاربران)
  *  POST   /api/books                                               -> ثبت کتاب (فقط ADMIN)
