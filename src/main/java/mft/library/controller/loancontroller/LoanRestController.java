@@ -10,13 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-/**
- * امانت گرفتن و بازگرداندن کتاب (کاربر عادی)
- *  POST /api/loans                  -> امانت گرفتن (body: {"bookId": 1})
- *  POST /api/loans/{loanId}/return  -> بازگرداندن کتاب
- *  GET  /api/loans/my/active        -> کتاب‌هایی که الان در امانت من است
- *  GET  /api/loans/my/history       -> تاریخچه‌ی امانت‌های قبلی من
- */
+
 @RestController
 @RequestMapping("/api/loans")
 public class LoanRestController {

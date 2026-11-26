@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 public class FineService {
 
-    // جریمه‌ی ثابت هر روز دیرکرد
     public static final long FINE_PER_DAY = 5000;
 
     private final FineRepository fineRepository;
@@ -59,9 +58,6 @@ public class FineService {
         return Math.max(days, 0);
     }
 
-    // ------------------------------------------------------------------
-    // پنل کاربر
-    // ------------------------------------------------------------------
 
 
     @Transactional(readOnly = true)

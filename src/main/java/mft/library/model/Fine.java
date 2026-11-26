@@ -22,10 +22,6 @@ public class Fine implements Serializable {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    // تغییر: نوع amount از BigDecimal به long عوض شد.
-    // مبلغ جریمه عدد صحیح است (روزهای دیرکرد × مبلغ ثابت روزانه) و
-    // با long می‌شود در FineService مستقیم با += جمع زد.
-    // علت خطای قبلی: روی BigDecimal عملگر += کار نمی‌کند.
     @Column(nullable = false)
     private long amount;
 

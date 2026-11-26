@@ -68,7 +68,7 @@ public class ReservationService {
         return reservationMapper.toDto(reservationRepository.save(reservation));
     }
 
-    /** رزروهای من. */
+
     @Transactional(readOnly = true)
     public List<ReservationDto> getMyReservations(String email) {
         Member member = memberService.getMemberByEmail(email);

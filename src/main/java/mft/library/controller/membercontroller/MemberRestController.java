@@ -9,12 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
-/**
- * ثبت‌نام و ورود
- *  POST /api/members/register  -> ثبت‌نام (بدون نیاز به ورود)
- *  POST /api/members/login     -> ورود (با هدر Basic Auth)؛ اطلاعات کاربر را برمی‌گرداند
- *  GET  /api/members/me        -> اطلاعات کاربر واردشده
- */
+
 @RestController
 @RequestMapping("/api/members")
 public class MemberRestController {

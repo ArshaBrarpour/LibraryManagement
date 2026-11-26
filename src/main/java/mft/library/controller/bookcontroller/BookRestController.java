@@ -8,14 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * مدیریت و جستجوی کتاب‌ها
- *  GET    /api/books?search=&category=&onlyAvailable=&page=&size=  -> لیست صفحه‌بندی‌شده (همه‌ی کاربران)
- *  GET    /api/books/{id}                                          -> یک کتاب (همه‌ی کاربران)
- *  POST   /api/books                                               -> ثبت کتاب (فقط ADMIN)
- *  PUT    /api/books/{id}                                          -> ویرایش کتاب (فقط ADMIN)
- *  DELETE /api/books/{id}                                          -> حذف کتاب (فقط ADMIN)
- */
 @RestController
 @RequestMapping("/api/books")
 public class BookRestController {

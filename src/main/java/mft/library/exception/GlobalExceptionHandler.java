@@ -14,7 +14,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // خطاهای خودمان (کتاب پیدا نشد، موجودی تمام شد، ...)
+
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<Map<String, Object>> handleApiException(ApiException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatus()).body(body);
     }
 
-    // خطای اعتبارسنجی ورودی (@Valid): مثلاً ایمیل اشتباه یا عنوان خالی
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new LinkedHashMap<>();
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(body);
     }
 
-    // اضافه شد: JSON خراب یا خالی فرستاده شده
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, Object>> handleBadJson(HttpMessageNotReadableException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
@@ -43,8 +43,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(body);
     }
 
-    // اضافه شد: مثلاً دو درخواست همزمان با یک ایمیل/شابک یکسان؛ قید unique دیتابیس خطا می‌دهد.
-    // بدون این هندلر کاربر خطای 500 می‌گرفت.
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, Object>> handleDataIntegrity(DataIntegrityViolationException ex) {
         Map<String, Object> body = new LinkedHashMap<>();

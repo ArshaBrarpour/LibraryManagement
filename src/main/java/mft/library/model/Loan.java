@@ -31,11 +31,11 @@ public class Loan implements Serializable {
     @Column(name = "loan_date", nullable = false)
     private LocalDateTime loanDate;
 
-    // موعد تحویل (۱۴ روز بعد از امانت)
+
     @Column(name = "due_date", nullable = false)
     private LocalDateTime dueDate;
 
-    // تاریخ واقعی بازگشت؛ تا وقتی کتاب برنگشته null است
+
     @Column(name = "return_date")
     private LocalDateTime returnDate;
 

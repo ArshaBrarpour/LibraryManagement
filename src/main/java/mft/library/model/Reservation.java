@@ -28,7 +28,7 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    // ترتیب صف بر اساس همین تاریخ است
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

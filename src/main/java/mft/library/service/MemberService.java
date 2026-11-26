@@ -25,7 +25,6 @@ public class MemberService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // ثبت‌نام: همیشه با نقش USER
     @Transactional
     public MemberDto register(MemberRequest request) {
         String email = request.email().trim().toLowerCase();

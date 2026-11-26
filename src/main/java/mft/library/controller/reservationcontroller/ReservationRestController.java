@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-/**
- * صف رزرو کتاب‌های ناموجود (کاربر عادی)
- *  POST /api/reservations      -> رزرو کتاب (body: {"bookId": 1})
- *  GET  /api/reservations/my   -> رزروهای من
- */
+
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationRestController {

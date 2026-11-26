@@ -35,9 +35,6 @@ public class BookService {
         this.bookMapper = bookMapper;
     }
 
-    // ------------------------------------------------------------------
-    // ثبت کتاب (ادمین)
-    // ------------------------------------------------------------------
     @Transactional
     public BookDto create(BookRequest request) {
         String isbn = request.isbn().trim();
@@ -50,9 +47,6 @@ public class BookService {
         return bookMapper.toDto(bookRepository.save(book));
     }
 
-    // ------------------------------------------------------------------
-    // ویرایش کتاب (ادمین)
-    // ------------------------------------------------------------------
     @Transactional
     public BookDto update(Long id, BookRequest request) {
         Book book = findBookForUpdate(id);
@@ -68,23 +62,17 @@ public class BookService {
         }
         bookMapper.updateEntity(request, book);
         book.setIsbn(isbn);
-        // موجودی آزاد = کل نسخه‌ها - نسخه‌های در امانت
         book.setAvailableCopies(request.totalCopies() - borrowedCopies);
         return bookMapper.toDto(book);
     }
 
-    // ------------------------------------------------------------------
-    // مشاهده و جستجو (همه‌ی کاربران)
-    // ------------------------------------------------------------------
     @Transactional(readOnly = true)
     public BookDto findById(Long id) {
-        // قبلاً اگر کتاب نبود null برمی‌گشت؛ حالا خطای 404 درست برمی‌گردد
         return bookRepository.findById(id)
                 .map(bookMapper::toDto)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "کتاب پیدا نشد"));
     }
 
-    // لیست صفحه‌بندی‌شده + جستجو (عنوان/نویسنده) + فیلتر دسته‌بندی + «فقط موجود»
     @Transactional(readOnly = true)
     public Page<BookDto> search(String search, String category, boolean onlyAvailable, int page, int size) {
         int safePage = Math.max(page, 0);
@@ -97,11 +85,6 @@ public class BookService {
         return books.map(bookMapper::toDto);
     }
 
-    // ------------------------------------------------------------------
-    // حذف کتاب (ادمین)
-    // ------------------------------------------------------------------
-    // تغییر: متد deleteById(id, request) که بدون هیچ بررسی کتاب را پاک می‌کرد حذف شد
-    // (قانون «حذف فقط اگر امانت و صف رزرو نباشد» را رد می‌کرد). فقط همین متد می‌ماند.
     @Transactional
     public void delete(Long id) {
         Book book = findBookForUpdate(id);
@@ -111,7 +94,6 @@ public class BookService {
         if (reservationRepository.existsByBookIdAndStatus(id, ReservationStatus.WAITING)) {
             throw new ApiException(HttpStatus.CONFLICT, "برای این کتاب صف رزرو وجود دارد و حذف نمی‌شود");
         }
-        // سابقه‌ی قدیمی امانت/رزرو (برگشته یا لغوشده) باید پاک شود وگرنه کلید خارجی اجازه‌ی حذف کتاب را نمی‌دهد
         loanRepository.deleteByBookId(id);
         reservationRepository.deleteByBookId(id);
         bookRepository.delete(book);

@@ -28,7 +28,7 @@ public class Member implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // رمز عبور به‌صورت هش‌شده (BCrypt) ذخیره می‌شود، نه متن ساده
+
     @Column(nullable = false)
     private String password;
 

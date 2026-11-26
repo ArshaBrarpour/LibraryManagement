@@ -44,9 +44,6 @@ public class LoanService {
         this.loanMapper = loanMapper;
     }
 
-    // ------------------------------------------------------------------
-    // امانت گرفتن
-    // ------------------------------------------------------------------
     @Transactional
     public LoanDto loanBook(String email, Long bookId) {
         Book book = bookRepository.findByIdForUpdate(bookId)
@@ -74,9 +71,6 @@ public class LoanService {
         return loanMapper.toDto(loan);
     }
 
-    // ------------------------------------------------------------------
-    // بازگرداندن کتاب
-    // ------------------------------------------------------------------
     @Transactional
     public LoanDto returnBook(String email, Long loanId) {
         Loan loan = loanRepository.findByIdForUpdate(loanId)
@@ -105,10 +99,6 @@ public class LoanService {
         return loanMapper.toDto(loan);
     }
 
-    // ------------------------------------------------------------------
-    // مشاهده
-    // ------------------------------------------------------------------
-
 
     @Transactional(readOnly = true)
     public List<LoanDto> getMyActiveBorrows(String email) {
@@ -127,15 +117,12 @@ public class LoanService {
                 loanRepository.findByMemberIdAndStatusOrderByReturnDateDesc(member.getId(), LoanStatus.RETURNED));
     }
 
-    // ------------------------------------------------------------------
-    // کمکی‌ها
-    // ------------------------------------------------------------------
     private Loan createLoan(Member member, Book book, LocalDateTime today) {
         Loan loan = new Loan();
         loan.setMember(member);
         loan.setBook(book);
         loan.setLoanDate(today);
-        loan.setDueDate(today.plusDays(LOAN_DAYS));   // موعد تحویل: ۱۴ روز بعد
+        loan.setDueDate(today.plusDays(LOAN_DAYS));
         loan.setStatus(LoanStatus.ACTIVE);
         return loanRepository.save(loan);
     }
